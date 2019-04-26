@@ -1,0 +1,3 @@
+endpoint: http://0.0.0.0:4467/prisma/default
+datamodel: datamodel.prisma
+secret: 'thismeanswar'

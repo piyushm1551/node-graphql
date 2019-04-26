@@ -1,0 +1,108 @@
+type Query {
+users(query:String):[User ! ] ! 
+posts(query:String):[Post ! ] ! 
+comments(query:String):[Comment ! ] ! 
+add(numbers:[Float ! ] ! ):Float ! 
+grades:[Int ! ] ! 
+me:User
+post:Post
+}
+
+type Mutation {
+createUser(data:CreateUserInput):User ! 
+deleteUser(id:ID ! ):User ! 
+editUser(id:ID ! , data:EditUserInput):User ! 
+createPost(data:CreatePostInput):Post ! 
+editPost(id:ID ! , data:EditPostInput):Post ! 
+deletePost(id:ID ! ):Post ! 
+createComment(data:CreateCommentInput):Comment ! 
+editComment(id:ID ! , data:EditCommentInput):Comment ! 
+deleteComment(id:ID ! ):Comment ! 
+}
+
+type Subscription {
+    count:Int !
+    comment(postId: ID!): CommentSubscriptionPayload!
+    post: PostSubscriptionPayload!
+}
+
+
+
+input CreateCommentInput {
+text:String ! , 
+author:ID ! , 
+post:ID ! 
+}
+
+input EditUserInput {
+name:String, 
+email:String, 
+age:Float
+    }
+
+input CreatePostInput {
+title:String ! , 
+body:String ! , 
+published:Boolean ! , 
+author:ID ! 
+}
+
+input EditPostInput {
+title:String, 
+body:String, 
+published:Boolean, 
+author:ID
+    }
+
+input CreateUserInput {
+name:String ! , 
+email:String ! , 
+age:Float
+    }
+
+type Comment {
+id:ID ! , 
+text:String ! , 
+author:User ! , 
+post:Post ! 
+}
+
+input EditCommentInput {
+text:String
+    }
+
+type Post {
+id:ID ! 
+title:String ! 
+body:String ! 
+published:Boolean ! 
+author:User ! , 
+comments:[Comment ! ] ! 
+}
+
+type User {
+id:ID ! 
+name:String ! 
+email:String ! 
+age:Int, 
+posts:[Post], 
+comments:[Comment]
+}
+
+enum MutationType {
+    CREATED,
+    UPDATED,
+    DELETED
+}
+
+type PostSubscriptionPayload {
+  mutation: MutationType!
+  data: Post!  
+}
+
+type CommentSubscriptionPayload {
+    mutation: MutationType!
+    data: Comment!
+}
+
+

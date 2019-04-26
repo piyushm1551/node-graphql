@@ -1,0 +1,2 @@
+endpoint: http://0.0.0.0:4467/reviews/default2
+datamodel: datamodel.prisma
